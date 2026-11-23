@@ -34,3 +34,12 @@
 - **Primer checkpoint**: Commit `229b1ef` - estado funcional con animaciones snow/foil, selector vistas, puerto 3003
 - **Iconos navideños añadidos**: 🎁 regalo, 🎄 árbol, ❄️ copo, ⭐ estrella alrededor de las tarjetas con animación sutil de fade in/out + cambio de escala tenue (8s ease-in-out, delays escalonados 2s)
 - **Sistema de recuperación**: Ahora cada sesión termina en commit; `git restore .` vuelve al último checkpoint; ramas para experimentos
+
+### 23-nov-2026 (tarde) — Iconos rediseñados: distribución pantalla completa
+- **24 iconos** distribuidos aleatoriamente por todo el viewport (no solo alrededor de la tarjeta)
+- **Tamaños variables**: 16-40px aleatorios
+- **Animación más rápida**: 4s (era 8s) con ease-in-out
+- **Delays aleatorios**: 0-4s para aparición escalonada natural
+- **Duraciones variables**: 3.5-5s para desincronizar ciclos
+- **Opacidad dinámica**: 0 → 0.4 → 0.7 → 0.85 → 0.7 → 0.4 → 0 con rotación sutil ±5°
+- **Checkpoint**: `54056c0`
