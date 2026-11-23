@@ -63,19 +63,74 @@
   <div class="xmas-icons" id="xmasIcons"></div>
 
   <script>
-    // Christmas decorative icons - distributed across screen
+    // Christmas decorative icons - distributed around card, avoiding center
     const xmasIconsContainer = document.getElementById('xmasIcons');
     const icons = ['🎁', '🎄', '❄️', '⭐'];
-    const iconCount = 24; // multiple icons across screen
+    const iconCount = 24;
     
-    for (let i = 0; i < iconCount; i++) {
+    // Card center area to avoid (approximate)
+    const cardCenterX = 50; // percentage
+    const cardCenterY = 50;
+    const cardRadius = 22; // percentage - keep icons outside this radius from center
+    
+    // Generate positions with spacing check
+    const positions = [];
+    const minDistance = 12; // minimum percentage distance between icons
+    let attempts = 0;
+    const maxAttempts = iconCount * 50;
+    
+    while (positions.length < iconCount && attempts < maxAttempts) {
+      attempts++;
+      
+      // Generate position in rings around card (not purely random)
+      const ring = Math.floor(Math.random() * 3); // 0, 1, 2 = inner, middle, outer ring
+      const angle = Math.random() * Math.PI * 2;
+      const baseRadius = [28, 38, 48][ring]; // percentage from center
+      const radiusVariation = (Math.random() - 0.5) * 8; // ±4%
+      const radius = Math.max(baseRadius + radiusVariation, cardRadius + 5);
+      
+      const x = cardCenterX + Math.cos(angle) * radius;
+      const y = cardCenterY + Math.sin(angle) * radius;
+      
+      // Skip if too close to card center
+      const distToCenter = Math.sqrt(Math.pow(x - cardCenterX, 2) + Math.pow(y - cardCenterY, 2));
+      if (distToCenter < cardRadius) continue;
+      
+      // Check distance from existing icons
+      let tooClose = false;
+      for (const pos of positions) {
+        const d = Math.sqrt(Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2));
+        if (d < minDistance) {
+          tooClose = true;
+          break;
+        }
+      }
+      if (tooClose) continue;
+      
+      // Keep within viewport bounds (5-95%)
+      if (x < 5 || x > 95 || y < 5 || y > 95) continue;
+      
+      positions.push({ x, y });
+    }
+    
+    // If we couldn't place all with spacing, fill remaining with random safe positions
+    while (positions.length < iconCount) {
+      const x = 5 + Math.random() * 90;
+      const y = 5 + Math.random() * 90;
+      const distToCenter = Math.sqrt(Math.pow(x - cardCenterX, 2) + Math.pow(y - cardCenterY, 2));
+      if (distToCenter >= cardRadius) {
+        positions.push({ x, y });
+      }
+    }
+    
+    // Create icons at calculated positions
+    positions.forEach((pos, i) => {
       const el = document.createElement('div');
       el.className = 'xmas-icon';
       el.textContent = icons[Math.floor(Math.random() * icons.length)];
       
-      // Random position across viewport
-      el.style.left = Math.random() * 100 + '%';
-      el.style.top = Math.random() * 100 + '%';
+      el.style.left = pos.x + '%';
+      el.style.top = pos.y + '%';
       
       // Random size variation
       const baseSize = 16 + Math.random() * 24; // 16-40px
@@ -91,7 +146,7 @@
       el.style.opacity = '0';
       
       xmasIconsContainer.appendChild(el);
-    }
+    });
 
     // Create snowflakes
     const snowContainer = document.getElementById('snow');
