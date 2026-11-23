@@ -28,3 +28,9 @@
 - Eliminado todo lo que se hizo después del 19-nov.
 - LOG.md actualizado al estado limpio del 19-nov.
 - Proyecto listo para continuar desde donde se pausó.
+
+### 23-nov-2026 — Control de versiones + Iconos navideños
+- **Git init**: Repositorio local inicializado con .gitignore (excluye node_modules/, dist/)
+- **Primer checkpoint**: Commit `229b1ef` - estado funcional con animaciones snow/foil, selector vistas, puerto 3003
+- **Iconos navideños añadidos**: 🎁 regalo, 🎄 árbol, ❄️ copo, ⭐ estrella alrededor de las tarjetas con animación sutil de fade in/out + cambio de escala tenue (8s ease-in-out, delays escalonados 2s)
+- **Sistema de recuperación**: Ahora cada sesión termina en commit; `git restore .` vuelve al último checkpoint; ramas para experimentos
