@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0f0a">
+  <title>Canasta Navideña — Anónimo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; background: #0a0f0a; }
+    body { font-family: "Gill Sans","Gill Sans MT","Avenir Next",Futura,system-ui,sans-serif; color: #c8b48f; -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none; }
+    #scene { position: absolute; inset: 0; cursor: grab; touch-action: none; }
+    #scene canvas { display: block; width: 100%; height: 100%; outline: none; }
+    body.dragging #scene { cursor: grabbing; }
+    .mark, .hint { position: fixed; margin: 0; pointer-events: none; z-index: 1; }
+    .mark { top: max(26px, env(safe-area-inset-top)); left: max(30px, env(safe-area-inset-left)); font: 500 12px/1 "Gill Sans","Gill Sans MT","Avenir Next",Futura,system-ui,sans-serif; letter-spacing: .34em; text-transform: uppercase; opacity: 0; transform: translateY(-6px); transition: opacity 1.4s .9s ease, transform 1.4s .9s ease; }
+    .mark small { display: block; margin-top: 9px; font: italic 400 13px/1 "Gill Sans","Gill Sans MT","Avenir Next",Futura,system-ui,sans-serif; letter-spacing: .04em; text-transform: none; color: #8a7c68; }
+    .hint { left: 50%; bottom: max(28px, env(safe-area-inset-bottom)); transform: translate(-50%, 6px); font: 400 12px/1 "Gill Sans","Gill Sans MT","Avenir Next",Futura,system-ui,sans-serif; letter-spacing: .24em; text-transform: uppercase; color: #bdaa89; text-shadow: 0 1px 8px rgba(0,0,0,.7); white-space: nowrap; opacity: 0; transition: opacity 1.2s 1.8s ease, transform 1.2s 1.8s ease; }
+    .foil-overlay { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(at 30% 20%, rgba(212,175,55,.4) 0%, transparent 50%), radial-gradient(at 70% 80%, rgba(139,58,48,.3) 0%, transparent 50%); mask: radial-gradient(ellipse at 50% 50%, white 0%, transparent 80%); animation: foil-spin 20s linear infinite; z-index: 2; }
+    @keyframes foil-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .snow { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 3; }
+    .snowflake { position: absolute; color: #fff; font-size: 8px; animation: snow-fall linear infinite; }
+    @keyframes snow-fall { to { transform: translateY(100vh) rotate(calc(var(--rot, 0deg))); } }
+    .label-hint { position: absolute; bottom: 30px; left: 30px; font-size: 10px; color: #8a7c68; text-transform: uppercase; letter-spacing: .15em; z-index: 4; }
+    .nav-btn { position: fixed; top: 30px; padding: 12px 28px; background: linear-gradient(135deg, #6b5b3a 0%, #4a3525 100%); color: #fff; border: 2px solid #4a3525; border-radius: 30px; font: 600 13px "Gill Sans","Gill Sans MT","Avenir Next",Futura,system-ui,sans-serif; cursor: pointer; z-index: 10; transition: all 0.3s; box-shadow: 0 4px 20px rgba(107,91,58,.4), inset 0 1px 0 rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .1em; }
+    .nav-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 30px rgba(107,91,58,.6), inset 0 1px 0 rgba(255,255,255,.4); }
+    .nav-btn.active { background: linear-gradient(135deg, #2d2a20 0%, #1e1c15 100%); color: #fff; border-color: #6b5b3a; box-shadow: 0 4px 20px rgba(45,42,32,.5), inset 0 1px 0 rgba(255,255,255,.2); }
+    .nav-btn:first-of-type { left: 30px; }
+    .nav-btn:last-of-type { left: 180px; }
+    .basket-wrapper { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .basket { width: 300px; height: 300px; background: linear-gradient(135deg, #6b5b3a 0%, #4a3525 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(0,0,0,.5), 0 0 0 3px #6b5b3a; transition: all 0.3s; }
+    .basket:hover { transform: scale(1.05); }
+    .basket img { max-width: 100%; max-height: 100%; border-radius: 15px; }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+  <div class="snow" id="snow"></div>
+  <div class="foil-overlay"></div>
+  <div class="label-hint">Arrastrar para rotar • Rueda para acercar</div>
+  
+  <button class="nav-btn" onclick="navigateTo('cindermane')">Canastas</button>
+  <button class="nav-btn" onclick="navigateTo('anonimo')">Caramelos</button>
+  
+  <div class="basket-wrapper">
+    <div class="basket">
+      <img src="../../img/nuevafunda.gif" alt="Canasta Navideña Anónima">
+    </div>
+  </div>
+
+  <script>
+    // Create snowflakes
+    const snowContainer = document.getElementById('snow');
+    const snowflakeCount = 120;
+    
+    for (let i = 0; i < snowflakeCount; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.className = 'snowflake';
+      snowflake.style.left = Math.random() * 100 + '%';
+      snowflake.style.top = Math.random() * 100 + '%';
+      snowflake.style.fontSize = (Math.random() * 4 + 2) + 'px';
+      snowflake.style.animationDuration = (Math.random() * 8 + 6) + 's';
+      snowflake.style.animationDelay = (Math.random() * 3) + 's';
+      snowflake.textContent = '★';
+      snowflake.style.color = 'rgba(189,170,137,0.6)';
+      snowContainer.appendChild(snowflake);
+    }
+    
+    function updateSnow() {
+      const flakes = document.querySelectorAll('.snowflake');
+      flakes.forEach((sf, i) => {
+        const y = parseFloat(sf.style.top);
+        sf.style.top = (y + 0.5) + 'px';
+        if (y > 100) {
+          sf.style.top = '-10px';
+          sf.style.left = Math.random() * 100 + '%';
+        }
+      });
+    }
+    
+    setInterval(updateSnow, 50);
+
+    // Navigation
+    function navigateTo(variant) {
+      const isNavidad = variant === 'cindermane';
+      const btns = document.querySelectorAll('.nav-btn');
+      
+      btns.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Change colors based on variant
+      const basket = document.querySelector('.basket');
+      if (isNavidad) {
+        basket.style.background = 'linear-gradient(135deg, #8b5a2b 0%, #5a3015 100%)';
+        basket.querySelector('img').src = '../../img/canastapromocional.jpg';
+      } else {
+        basket.style.background = 'linear-gradient(135deg, #6b5b3a 0%, #4a3525 100%)';
+        basket.querySelector('img').src = '../../img/nuevafunda.gif';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# Bitácora — Canastas Navidenas (Landing de Prompts)
+
+## Estado actual (20-nov-2026, ~14:30)
+
+- **Proyecto actual**: Estado exacto de 19 de noviembre de 2026 restaurado (versión limpia con animaciones originales de nieve y foil overlay, selector de vistas "Canastas" y "Caramelos" con GIF `nuevafunda.gif` y JPG `canastapromocional.jpg`).
+- **Puerto**: 3003 (`http://127.0.0.1:3003/`)
+- **Animaciones activas**:
+  - `snow-fall` (copos de nieve animados con JS y CSS)
+  - `foil-spin` (overlay radial giratorio)
+  - Transición limpia entre Canastas y Caramelos
+
+## Historial de cambios
+
+### 19-nov-2026 — Estado original del proyecto
+- Landing page con animaciones de nieve y foil overlay
+- Selector de vistas: "Canastas" (canastapromocional.jpg) y "Caramelos" (nuevafunda.gif)
+- Servidor corriendo en puerto 3003
+
+### 20-nov-2026 — Restauración desde punto de referencia
+- **Problema**: Se aplicaron mejoras con `modern-web-guidance` (Holo 3D, badge, botón WhatsApp, ornaments) que generaron conflictos de sintaxis y encoding.
+- **Sintaxis**: Error en `document.querySelectorAll('.nav-btn';` (falta paréntesis) detuvo la ejecución del script.
+- **Encoding**: Emojis (★, 🎄, ⭐, 🔔, ❄, 🎁) se sirvieron corruptos como bytes raw en lugar de entidades HTML.
+- **Loop**: Se intentó corregir múltiples veces sin éxito, generando más problemas.
+- **Solución**: El usuario recordó que existía un backup `.bak` del archivo `dark-souls-holo-card.html` del 19-nov. Al restaurarlo y reconstruir el cindermane a partir de ese estado base, el proyecto volvió a funcionar correctamente.
+- **Lección**: Los backups y los puntos de referencia son cruciales cuando los cambios se desestabilizan.
+
+### 21-nov-2026 — Limpieza y registro
+- Eliminado todo lo que se hizo después del 19-nov.
+- LOG.md actualizado al estado limpio del 19-nov.
+- Proyecto listo para continuar desde donde se pausó.
