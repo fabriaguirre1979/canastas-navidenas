@@ -31,6 +31,21 @@
     .basket { width: 300px; height: 300px; background: linear-gradient(135deg, #6b5b3a 0%, #4a3525 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(0,0,0,.5), 0 0 0 3px #6b5b3a; transition: all 0.3s; }
     .basket:hover { transform: scale(1.05); }
     .basket img { max-width: 100%; max-height: 100%; border-radius: 15px; }
+
+    /* Christmas decorative icons around the card */
+    .xmas-icons { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+    .xmas-icon { position: absolute; font-size: 28px; opacity: 0; transform: scale(0.8); animation: xmas-float 8s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+    .xmas-icon:nth-child(1) { --delay: 0s; --start-angle: 45deg; --radius: 220px; }
+    .xmas-icon:nth-child(2) { --delay: 2s; --start-angle: 135deg; --radius: 200px; }
+    .xmas-icon:nth-child(3) { --delay: 4s; --start-angle: 225deg; --radius: 240px; }
+    .xmas-icon:nth-child(4) { --delay: 6s; --start-angle: 315deg; --radius: 190px; }
+    @keyframes xmas-float {
+      0%, 100% { opacity: 0; transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.8) rotate(0deg); }
+      10% { opacity: 0.6; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.0) rotate(2deg); }
+      40% { opacity: 0.85; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.05) rotate(-1deg); }
+      60% { opacity: 0.85; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.02) rotate(1deg); }
+      90% { opacity: 0.6; transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.95) rotate(-2deg); }
+    }
   </style>
 </head>
 <body>
@@ -48,7 +63,46 @@
     </div>
   </div>
 
+  <div class="xmas-icons" id="xmasIcons"></div>
+
   <script>
+    // Christmas decorative icons
+    const xmasIconsContainer = document.getElementById('xmasIcons');
+    const icons = ['🎁', '🎄', '❄️', '⭐'];
+    
+    icons.forEach((icon, i) => {
+      const el = document.createElement('div');
+      el.className = 'xmas-icon';
+      el.textContent = icon;
+      el.style.animationDelay = `${i * 2}s`;
+      xmasIconsContainer.appendChild(el);
+    });
+
+    // Position icons around the card center
+    function positionXmasIcons() {
+      const container = document.querySelector('.basket-wrapper');
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const icons = document.querySelectorAll('.xmas-icon');
+      const angles = [45, 135, 225, 315]; // degrees
+      const radii = [220, 200, 240, 190];
+      
+      icons.forEach((icon, i) => {
+        const angle = (angles[i] * Math.PI) / 180;
+        const radius = radii[i];
+        const tx = Math.cos(angle) * radius;
+        const ty = Math.sin(angle) * radius;
+        icon.style.setProperty('--tx', `${tx}px`);
+        icon.style.setProperty('--ty', `${ty}px`);
+      });
+    }
+    
+    // Position on load and resize
+    positionXmasIcons();
+    window.addEventListener('resize', positionXmasIcons);
+
     // Create snowflakes
     const snowContainer = document.getElementById('snow');
     const snowflakeCount = 120;
