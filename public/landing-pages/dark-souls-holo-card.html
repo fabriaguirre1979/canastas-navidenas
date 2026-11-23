@@ -32,19 +32,16 @@
     .basket:hover { transform: scale(1.05); }
     .basket img { max-width: 100%; max-height: 100%; border-radius: 15px; }
 
-    /* Christmas decorative icons around the card */
-    .xmas-icons { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
-    .xmas-icon { position: absolute; font-size: 28px; opacity: 0; transform: scale(0.8); animation: xmas-float 8s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
-    .xmas-icon:nth-child(1) { --delay: 0s; --start-angle: 45deg; --radius: 220px; }
-    .xmas-icon:nth-child(2) { --delay: 2s; --start-angle: 135deg; --radius: 200px; }
-    .xmas-icon:nth-child(3) { --delay: 4s; --start-angle: 225deg; --radius: 240px; }
-    .xmas-icon:nth-child(4) { --delay: 6s; --start-angle: 315deg; --radius: 190px; }
+    /* Christmas decorative icons distributed across screen */
+    .xmas-icons { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+    .xmas-icon { position: absolute; will-change: transform, opacity; animation: xmas-float 4s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
     @keyframes xmas-float {
-      0%, 100% { opacity: 0; transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.8) rotate(0deg); }
-      10% { opacity: 0.6; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.0) rotate(2deg); }
-      40% { opacity: 0.85; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.05) rotate(-1deg); }
-      60% { opacity: 0.85; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.02) rotate(1deg); }
-      90% { opacity: 0.6; transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.95) rotate(-2deg); }
+      0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      15% { opacity: 0.4; transform: scale(0.9) rotate(5deg); }
+      35% { opacity: 0.7; transform: scale(1.1) rotate(-3deg); }
+      50% { opacity: 0.85; transform: scale(1.0) rotate(2deg); }
+      65% { opacity: 0.7; transform: scale(1.05) rotate(-2deg); }
+      85% { opacity: 0.4; transform: scale(0.8) rotate(4deg); }
     }
   </style>
 </head>
@@ -66,42 +63,35 @@
   <div class="xmas-icons" id="xmasIcons"></div>
 
   <script>
-    // Christmas decorative icons
+    // Christmas decorative icons - distributed across screen
     const xmasIconsContainer = document.getElementById('xmasIcons');
     const icons = ['🎁', '🎄', '❄️', '⭐'];
+    const iconCount = 24; // multiple icons across screen
     
-    icons.forEach((icon, i) => {
+    for (let i = 0; i < iconCount; i++) {
       const el = document.createElement('div');
       el.className = 'xmas-icon';
-      el.textContent = icon;
-      el.style.animationDelay = `${i * 2}s`;
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      
+      // Random position across viewport
+      el.style.left = Math.random() * 100 + '%';
+      el.style.top = Math.random() * 100 + '%';
+      
+      // Random size variation
+      const baseSize = 16 + Math.random() * 24; // 16-40px
+      el.style.fontSize = baseSize + 'px';
+      
+      // Random animation delay for staggered appearance
+      el.style.animationDelay = (Math.random() * 4) + 's'; // 0-4s delay
+      
+      // Random animation duration variation (3.5-5s)
+      el.style.animationDuration = (3.5 + Math.random() * 1.5) + 's';
+      
+      // Random initial opacity
+      el.style.opacity = '0';
+      
       xmasIconsContainer.appendChild(el);
-    });
-
-    // Position icons around the card center
-    function positionXmasIcons() {
-      const container = document.querySelector('.basket-wrapper');
-      const rect = container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const icons = document.querySelectorAll('.xmas-icon');
-      const angles = [45, 135, 225, 315]; // degrees
-      const radii = [220, 200, 240, 190];
-      
-      icons.forEach((icon, i) => {
-        const angle = (angles[i] * Math.PI) / 180;
-        const radius = radii[i];
-        const tx = Math.cos(angle) * radius;
-        const ty = Math.sin(angle) * radius;
-        icon.style.setProperty('--tx', `${tx}px`);
-        icon.style.setProperty('--ty', `${ty}px`);
-      });
     }
-    
-    // Position on load and resize
-    positionXmasIcons();
-    window.addEventListener('resize', positionXmasIcons);
 
     // Create snowflakes
     const snowContainer = document.getElementById('snow');
