@@ -43,3 +43,11 @@
 - **Duraciones variables**: 3.5-5s para desincronizar ciclos
 - **Opacidad dinámica**: 0 → 0.4 → 0.7 → 0.85 → 0.7 → 0.4 → 0 con rotación sutil ±5°
 - **Checkpoint**: `54056c0`
+
+### 23-nov-2026 (noche) — Distribución inteligente en anillos alrededor de la tarjeta
+- **Evita el área central** (radio 22% desde centro) donde está la tarjeta — ni estrellas amontonadas a la derecha ni arbolitos tocando la tarjeta abajo
+- **3 anillos de distribución**: 28%, 38%, 48% del viewport desde el centro
+- **Espaciado mínimo**: 12% entre iconos (verificación de colisión)
+- **Variación radial**: ±4% por anillo para naturalidad
+- **Fallback seguro**: si no cabe con espaciado, coloca en posiciones aleatorias fuera del radio de la tarjeta
+- **Checkpoint**: `e6a9271`
