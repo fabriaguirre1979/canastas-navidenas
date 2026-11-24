@@ -4,8 +4,8 @@ export const CANASTAS_VARIANTS = ["navidad", "anonimo"] as const;
 export type CanastasVariant = (typeof CANASTAS_VARIANTS)[number];
 
 const CANASTAS_BASE: Record<CanastasVariant, string> = {
-  navidad: "/landing-pages/dark-souls-holo-card-cindermane.html",
-  anonimo: "/landing-pages/dark-souls-holo-card.html",
+  navidad: `${import.meta.env.BASE_URL}landing-pages/dark-souls-holo-card-cindermane.html`,
+  anonimo: `${import.meta.env.BASE_URL}landing-pages/dark-souls-holo-card.html`,
 };
 
 const CANASTAS_TITLES: Record<CanastasVariant, string> = {
