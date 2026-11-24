@@ -82,6 +82,12 @@
 - **Tipado**: Añadido `src/vite-env.d.ts` con tipos para `ImportMetaEnv.BASE_URL`
 - **Verificado**: iframe src ahora correcto → página carga sin pantalla en blanco
 
+### 24-nov-2026 (tarde) — **FIX: IMÁGENES EN GITHUB PAGES**
+- **Problema**: rutas relativas `../../img/` en HTMLs de `landing-pages/` resolvían a `https://fabriaguirre1979.github.io/img/` (saltándose el base path `/canastascaramelosnavidad0996201838/`)
+- **Solución**: Cambiar `src="../../img/..."` → `src="/canastascaramelosnavidad0996201838/img/..."` en ambos HTMLs (`dark-souls-holo-card-cindermane.html` y `dark-souls-holo-card.html`)
+- **JS navigateTo()**: Actualizado para usar `basePath = '/canastascaramelosnavidad0996201838'` al cambiar imagen al hacer click en botones Canastas/Caramelos
+- **Verificado**: Ambas imágenes cargan HTTP 200 en `https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/img/...`
+
 ---
 
 ## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
