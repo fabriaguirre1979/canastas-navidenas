@@ -76,6 +76,12 @@
 - **Deploy automático**: push a master = build + deploy automático
 - **Estado**: ✅ Live y respondiendo HTTP 200
 
+### 24-nov-2026 (tarde) — **FIX: IFRAME SRC BASE PATH**
+- **Problema**: iframe src faltaba el base path → cargaba `https://fabriaguirre1979.github.io/landing-pages/...` (404) en vez de `https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/landing-pages/...`
+- **Solución**: Usar `import.meta.env.BASE_URL` en `CanastasHoloCard.tsx` para prefijar rutas dinámicamente
+- **Tipado**: Añadido `src/vite-env.d.ts` con tipos para `ImportMetaEnv.BASE_URL`
+- **Verificado**: iframe src ahora correcto → página carga sin pantalla en blanco
+
 ---
 
 ## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
