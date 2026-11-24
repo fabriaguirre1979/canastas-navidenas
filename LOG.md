@@ -68,6 +68,14 @@
 - **Rama master** trackeando `origin/master`
 - **Base sólida** para continuar sin riesgo de pérdida
 
+### 24-nov-2026 (tarde) — **GITHUB PAGES ACTIVADO + REPO RENAMEADO**
+- **Repo renombrado**: `canastascaramelosnavidad0996201838` (nuevo nombre elegido por el usuario)
+- **URL GitHub Pages**: https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/
+- **Workflow CI/CD**: `.github/workflows/deploy-pages.yml` (build Vite → deploy via Actions)
+- **Vite base**: `/canastascaramelosnavidad0996201838/` configurado en `vite.config.ts`
+- **Deploy automático**: push a master = build + deploy automático
+- **Estado**: ✅ Live y respondiendo HTTP 200
+
 ---
 
 ## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
