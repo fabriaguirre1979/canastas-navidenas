@@ -7,6 +7,7 @@ export default defineConfig({
     port: 3003,
     host: '0.0.0.0'
   },
+  base: '/canastascaramelosnavidad0996201838/',
   build: {
     target: 'esnext'
   }
