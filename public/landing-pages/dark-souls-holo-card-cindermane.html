@@ -56,7 +56,7 @@
   
   <div class="basket-wrapper">
     <div class="basket">
-      <img src="/canastascaramelosnavidad0996201838/img/canastapromocional.jpg" alt="Canasta Navideña">
+      <img src="../../img/canastapromocional.jpg" alt="Canasta Navideña">
     </div>
   </div>
 
@@ -189,13 +189,13 @@
 
           // Change colors based on variant
           const basket = document.querySelector('.basket');
-          const basePath = '/canastascaramelosnavidad0996201838';
+          const basePath = '';
           if (isNavidad) {
             basket.style.background = 'linear-gradient(135deg, #8b5a2b 0%, #5a3015 100%)';
-            basket.querySelector('img').src = basePath + '/img/canastapromocional.jpg';
+            basket.querySelector('img').src = basePath + '../../img/canastapromocional.jpg';
           } else {
             basket.style.background = 'linear-gradient(135deg, #6b5b3a 0%, #4a3525 100%)';
-            basket.querySelector('img').src = basePath + '/img/nuevafunda.gif';
+            basket.querySelector('img').src = basePath + '../../img/nuevafunda.gif';
           }
         }
   </script>
