@@ -1,6 +1,6 @@
 # Bitácora — Canastas Navidenas (Landing de Prompts)
 
-## Estado actual (23-nov-2026, noche)
+## Estado actual (25-nov-2026, tarde)
 - **Proyecto actual**: Landing funcional con animaciones snow/foil, selector vistas Canastas/Caramelos, iconos navideños en 3 anillos alrededor de la tarjeta
 - **Puerto**: 3003 (`http://127.0.0.1:3003/`)
 - **Animaciones activas**:
@@ -10,6 +10,12 @@
   - Transición limpia entre Canastas y Caramelos
 - **Control de versiones**: ✅ **Git activo local + GitHub remoto** desde **23-nov-2026**
 - **Repositorio GitHub**: https://github.com/fabriaguirre1979/canastas-navidenas
+- **GitHub Pages LIVE**: https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/ (HTTP 200)
+- **PRÓXIMO PASO MAÑANA**: Completar registro en DNSHE-FreeDomains (https://dnshe.com)
+  1. Crear cuenta (email + pass) → verificar email (código expira rápido)
+  2. Console → Manage domains → registrar `canastascaramelosnavidad0996201838.bot.cd`
+  3. En zona DNSHE: crear CNAME `@` → `fabriaguirre1979.github.io` y CNAME `www` → `fabriaguirre1979.github.io`
+  4. GitHub Pages Settings → Custom domain: `canastascaramelosnavidad0996201838.bot.cd` → Enforce HTTPS
 
 ## Historial de cambios
 
@@ -88,9 +94,65 @@
 - **JS navigateTo()**: Actualizado para usar `basePath = '/canastascaramelosnavidad0996201838'` al cambiar imagen al hacer click en botones Canastas/Caramelos
 - **Verificado**: Ambas imágenes cargan HTTP 200 en `https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/img/...`
 
----
+### 25-nov-2026 (mañana) — **DIGITALPLAT ACCOUNT SETUP — IN PROGRESS**
+- **Estado**: Cuenta en creación — Google OAuth falla, intentando registro con email/contraseña
+- **Problema**: OAuth2 Google no autorizado / formulario no responde / loop de verificación en dashboard
+- **Alternativa**: Registro manual con email + contraseña (pendiente confirmación)
+- **Proveedor DNS externo**: A definir — descartado Cloudflare por momento; evaluando CloudNS o HE.net (registro con email/pass, sin OAuth)
+- **Objetivo**: Registrar dominio `canastascaramelosnavidad0996201838.us.kg` y delegar a nameservers externos
+- **Pasos pending**:
+  1. Confirmar registro DigitalPlat (email/pass o resolver Google OAuth)
+  2. Crear zona DNS en proveedor externo (CloudNS/HE.net) → obtener NS
+  3. Ingresar NS exactos en formulario DigitalPlat registro
+  4. Configurar A records (185.199.108-111.153) + CNAME www en DNS externo
+  5. Agregar custom domain en GitHub Pages: `canastascaramelosnavidad0996201838.us.kg`
+  6. Verificar HTTP/HTTPS y activar enforce HTTPS
 
-## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
+### 25-nov-2026 (mañana) — **BLOQUEO DECISIONES CRÍTICAS**
+- **Riesgo si falla merge**: Perder nombre `canastascaramelosnavidad0996201838.us.kg` → 3 días mínimos en aprobación + posible pérdida definitiva
+- **Mitigación**: Documentar cada campo antes submit; verificar zona DNS activa antes registro; submit una sola vez tras confirmación completa
+- **Arquitectura objetivo**:
+  ```
+  DigitalPlat Registry (delega NS)
+      │
+      ▼
+  DNS Externo (CloudNS/HE.net) — A records + CNAME
+      │
+      ▼
+  GitHub Pages (https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/)
+  ```
+- **Decision**: Evitar Cloudflare por momento; usar CloudNS o HE.net por registro simple email/pass
+
+### 25-nov-2026 (tarde) — **CAMBIO DE ESTRATEGIA: DNSHE-FreeDomains (.bot.cd)**
+- **DigitalPlat descartado**: registro .us.kg suspendido, no permite continuar
+- **Opción elegida**: DNSHE-FreeDomains (https://dnshe.com) — dominio gratis `.bot.cd` (también .de5.net, .us.ci, .cc.cd)
+- **Dominio objetivo**: `canastascaramelosnavidad0996201838.bot.cd` (coincide exacto con repo GitHub Pages)
+- **Ventajas**: gratis forever, sin tarjeta, DNS completo (A, CNAME, MX, TXT, NS, SRV, CAA), Anycast, API, 100k+ usuarios
+- **Estado**: Cuenta DNSHE en creación — código de verificación email expiró, **pendiente reintento registro mañana**
+
+### 25-nov-2026 (evening) — **DOMINIO CUSTOM .DE5.NET REGISTRADO Y CONFIGURADO**
+- **Dominio registrado**: `canastascaramelosnavidad0996201838.de5.net` en DNSHE-FreeDomains ✅
+- **CNAMEs configurados**: `@` y `www` → `fabriaguirre1979.github.io` en zona DNSHE ✅
+- **DNS propagado globalmente**: verificado con `dig +short` desde resolvers públicos ✅
+- **GitHub Pages workflow triggered**: deployment exitoso Build + Deploy ✅
+- **Certificado SSL en proceso**: `state: "new", "TLS certificate is being provisioned"` ⏳ (tardará hasta 15 min) ✅
+- **Sitio default LIVE**: `https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/` HTTP 200 ✅
+- **Pantalla blanca en HTTP** (`http://canastascaramelosnavidad0996201838.de5.net`): esperada mientras se genera el certificado SSL; el sitio funcionará plenamente sobre **HTTPS** después de la emisión del certificado ✅
+- **Próximo hito**: Certificado SSL listo (~15 min) → `https_enforced: true` → dominio custom totalmente funcional con HTTPS
+
+### 26-nov-2026 (mañana) — **FIX: PANTALLA EN BLANCO EN DOMINIO CUSTOM (.de5.net)**
+- **Problema**: `https://canastascaramelosnavidad0996201838.de5.net/` mostraba pantalla blanca (sin contenido). El HTML se servía pero los assets (JS, imágenes) daban 404.
+- **Causa raíz**: `vite.config.ts` tenía `base: '/canastascaramelosnavidad0996201838/'` — correcto para la URL de GitHub Pages (`/repo/`) pero **incorrecto para dominio custom** que sirve desde root (`/`). Los assets se generaban en `/canastascaramelosnavidad0996201838/assets/...` pero el dominio custom los buscaba en `/assets/...`.
+- **Solución aplicada**:
+  1. **vite.config.ts**: `base: './'` (rutas relativas) — funciona en ambas URLs.
+  2. **Landing pages HTML**: Rutas de imágenes cambiadas a absolutas desde root `/img/...` (en lugar de `../../img/...` o `/canastascaramelosnavidad0996201838/img/...`).
+  3. **Favicon**: Añadido `public/favicon.svg` (emoji 🎁) para evitar 404.
+- **Verificado**: Todos los assets cargan HTTP 200 en **ambas URLs**:
+  - Custom domain: `https://canastascaramelosnavidad0996201838.de5.net/` ✅
+  - GitHub Pages: `https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/` ✅
+- **Commits**: `49d74f8` (vite base), `a98faa7` (favicon + landing pages), `94bf361` (absolute img paths)
+
+---\n\n## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
 **Inspiración**: Fundación de Quito (6 dic), Fiestas de la Luz, Pase del Niño, Año Viejo
 **Producto**: Landing promocional de **chocolates artesanales + vinos** para regalos navideños/fin de año
 **Vinos confirmados**:
