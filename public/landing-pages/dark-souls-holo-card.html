@@ -21,7 +21,7 @@
     .snow { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 3; }
     .snowflake { position: absolute; color: #fff; font-size: 8px; animation: snow-fall linear infinite; }
     @keyframes snow-fall { to { transform: translateY(100vh) rotate(calc(var(--rot, 0deg))); } }
-    .label-hint { position: absolute; bottom: 30px; left: 30px; font-size: 11px; color: #8a7c68; text-transform: uppercase; letter-spacing: .15em; z-index: 4; line-height: 1.8; text-align: left; }
+    .label-hint { position: absolute; bottom: max(100px, env(safe-area-inset-bottom) + 50px); left: 30px; font-size: 11px; color: #8a7c68; text-transform: uppercase; letter-spacing: .15em; z-index: 4; line-height: 1.8; text-align: left; }
     .nav-btn { position: fixed; top: 30px; padding: 12px 28px; background: linear-gradient(135deg, #6b5b3a 0%, #4a3525 100%); color: #fff; border: 2px solid #4a3525; border-radius: 30px; font: 600 13px "Gill Sans","Gill Sans MT","Avenir Next",Futura,system-ui,sans-serif; cursor: pointer; z-index: 10; transition: all 0.3s; box-shadow: 0 4px 20px rgba(107,91,58,.4), inset 0 1px 0 rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .1em; }
     .nav-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 30px rgba(107,91,58,.6), inset 0 1px 0 rgba(255,255,255,.4); }
     .nav-btn.active { background: linear-gradient(135deg, #2d2a20 0%, #1e1c15 100%); color: #fff; border-color: #6b5b3a; box-shadow: 0 4px 20px rgba(45,42,32,.5), inset 0 1px 0 rgba(255,255,255,.2); }
