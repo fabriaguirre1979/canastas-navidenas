@@ -152,7 +152,20 @@
   - GitHub Pages: `https://fabriaguirre1979.github.io/canastascaramelosnavidad0996201838/` ✅
 - **Commits**: `49d74f8` (vite base), `a98faa7` (favicon + landing pages), `94bf361` (absolute img paths)
 
----\n\n## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
+### 26-nov-2026 (mañana) — **ADICIÓN: NÚMERO DE CONTACTO 0996201838 COMO LEtrero PRINCIPAL**
+- **Imagen**: `/img/0996201838.png` (776×1024 PNG) añadida como título/banner principal sobre la tarjeta central en ambas variantes de landing pages.
+- **Ubicación**: Centrada horizontalmente entre los botones superiores (Canastas/Caramelos) y la tarjeta principal.
+- **Implementación en ambos HTMLs** (`dark-souls-holo-card.html` y `dark-souls-holo-card-cindermane.html`):
+  - Contenedor `.title-wrapper` en `position: fixed; top: 50px; left: 50%; transform: translateX(-50%); z-index: 10`
+  - Imagen `.title-image` con `max-width: 100vw; max-height: 50vh` — responsive, mantiene aspect ratio
+  - Efecto visual: doble `drop-shadow` dorado/bronce (`rgba(212,175,55,0.5)` + `rgba(139,90,43,0.3)`) para presencia premium
+  - Animación de entrada: `title-fade-in` 1.2s ease-out (fade + slide-up desde -20px)
+- **Ajuste de armonía visual**: Tarjeta bajada con `padding-top: 160px` en `.basket-wrapper` para crear separación clara entre la línea inferior del número y el marco superior de la tarjeta — individualidad visual lograda sin solapamiento.
+- **Commits**: pending (se incluirán en próximo push)
+
+---
+
+## 🎯 PRÓXIMO PROYECTO: FIESTAS DE QUITO 2026 — Chocolates y Vinos
 **Inspiración**: Fundación de Quito (6 dic), Fiestas de la Luz, Pase del Niño, Año Viejo
 **Producto**: Landing promocional de **chocolates artesanales + vinos** para regalos navideños/fin de año
 **Vinos confirmados**:
