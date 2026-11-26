@@ -161,7 +161,19 @@
   - Efecto visual: doble `drop-shadow` dorado/bronce (`rgba(212,175,55,0.5)` + `rgba(139,90,43,0.3)`) para presencia premium
   - Animación de entrada: `title-fade-in` 1.2s ease-out (fade + slide-up desde -20px)
 - **Ajuste de armonía visual**: Tarjeta bajada con `padding-top: 160px` en `.basket-wrapper` para crear separación clara entre la línea inferior del número y el marco superior de la tarjeta — individualidad visual lograda sin solapamiento.
-- **Commits**: pending (se incluirán en próximo push)
+- **Commits**: `3ba2ee2` (phone banner + LOG), `0bb8ab8` (contact info replacement), `04d53d7` (img folder to public/img)
+
+### 26-nov-2026 (mediodía) — **ACTUALIZACIÓN: INFO DE CONTACTO EN FOOTER + FIX IMÁGENES EN PRODUCCIÓN**
+- **Footer inferior izquierdo**: Reemplazado "Arrastrar para rotar • Rueda para acercar" por información bancaria profesional:
+  ```
+  TAMAYO AGUIRRE MARÍA PEPITA ELSIRA
+  Bco Pichincha • Ahorros #3280457900
+  CI 1704967775
+  ```
+- **Estética**: `font-size: 11px`, `line-height: 1.8`, `text-align: left` — elegante y legible.
+- **Fix crítico imágenes**: Carpeta `img/` movida a `public/img/` para que Vite la incluya en el build de GitHub Pages (antes estaba en raíz y no se desplegaba).
+- **Verificado**: Imágenes ahora accesibles en ambas URLs tras deploy.
+- **Commits**: `0bb8ab8` (contact info), `04d53d7` (public/img fix)
 
 ---
 
