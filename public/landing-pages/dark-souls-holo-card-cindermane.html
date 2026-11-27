@@ -46,6 +46,16 @@
       65% { opacity: 0.7; transform: scale(1.05) rotate(-2deg); }
       85% { opacity: 0.4; transform: scale(0.8) rotate(4deg); }
     }
+
+    /* WhatsApp floating button */
+    .whatsapp-btn { position: fixed; bottom: 30px; right: 30px; z-index: 12; width: 64px; height: 64px; border: none; border-radius: 50%; background: transparent; cursor: pointer; padding: 0; box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4), 0 0 0 3px rgba(37, 211, 102, 0.2); transition: transform 0.3s, box-shadow 0.3s; animation: whatsapp-rotate-half 4s ease-in-out infinite; }
+    .whatsapp-btn:hover { transform: scale(1.15); box-shadow: 0 12px 40px rgba(37, 211, 102, 0.6), 0 0 0 4px rgba(37, 211, 102, 0.3); }
+    .whatsapp-btn img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+    @keyframes whatsapp-rotate-half {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+      100% { transform: rotate(0deg); }
+    }
   </style>
 </head>
 <body>
@@ -72,6 +82,10 @@
   </div>
 
   <div class="xmas-icons" id="xmasIcons"></div>
+
+  <a class="whatsapp-btn" href="https://wa.me/593995201838?text=Hello%2C%20I%20saw%20your%20offer.%20Please%20reply%20with%20%27C%27%20for%20a%20Christmas%20basket%20or%20%27F%27%20for%20a%20bag%20of%20candies." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <img src="/whatsapp/sinfondo.png" alt="WhatsApp">
+  </a>
 
   <script>
     // Christmas decorative icons - distributed around card, avoiding center
